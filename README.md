@@ -33,3 +33,5 @@ AI:
 - Python
 - Scikit-learn
 - Whisper
+
+thank you
