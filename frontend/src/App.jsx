@@ -10,6 +10,12 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import TeacherDashboard from "./pages/Teacher/TeacherDashboard";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 
+// Batch Management
+import BatchList from "./pages/BatchManagement/BatchList";
+import AddBatch from "./pages/BatchManagement/AddBatch";
+import EditBatch from "./pages/BatchManagement/EditBatch";
+import BatchDetails from "./pages/BatchManagement/BatchDetails";
+
 // Extra Pages
 import Unauthorized from "./pages/Common/Unauthorized";
 import NotFound from "./pages/Common/NotFound";
@@ -17,7 +23,6 @@ import NotFound from "./pages/Common/NotFound";
 function App() {
   return (
     <Routes>
-
       {/* ========================= */}
       {/* Public Routes */}
       {/* ========================= */}
@@ -27,7 +32,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
 
       {/* ========================= */}
-      {/* Admin Routes */}
+      {/* Admin Dashboard */}
       {/* ========================= */}
 
       <Route
@@ -40,7 +45,47 @@ function App() {
       />
 
       {/* ========================= */}
-      {/* Teacher Routes */}
+      {/* Batch Management */}
+      {/* ========================= */}
+
+      <Route
+        path="/admin/batches"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <BatchList />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin/batches/add"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <AddBatch />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin/batches/edit/:id"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <EditBatch />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin/batches/:id"
+        element={
+          <PrivateRoute allowedRoles={["admin"]}>
+            <BatchDetails />
+          </PrivateRoute>
+        }
+      />
+
+      {/* ========================= */}
+      {/* Teacher Dashboard */}
       {/* ========================= */}
 
       <Route
@@ -53,7 +98,7 @@ function App() {
       />
 
       {/* ========================= */}
-      {/* Student Routes */}
+      {/* Student Dashboard */}
       {/* ========================= */}
 
       <Route
@@ -82,7 +127,6 @@ function App() {
         path="*"
         element={<NotFound />}
       />
-
     </Routes>
   );
 }
