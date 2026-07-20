@@ -6,6 +6,10 @@ import {
   FaCheckCircle,
   FaUsers,
   FaChartPie,
+  FaUserGraduate,
+  FaUserCheck,
+  FaBookOpen,
+  FaClipboardList,
 } from "react-icons/fa";
 
 const AdminDashboard = () => {
@@ -43,11 +47,15 @@ const AdminDashboard = () => {
         </h1>
 
         <p className="mt-2 text-slate-500">
-          Welcome back! Here's an overview of your batches.
+          Welcome back! Here's an overview of your institute.
         </p>
       </div>
 
-      {/* Statistics */}
+      {/* Batch Statistics */}
+
+      <h2 className="mb-4 text-xl font-semibold text-slate-700">
+        Batch Statistics
+      </h2>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
@@ -76,7 +84,7 @@ const AdminDashboard = () => {
         />
 
         <DashboardCard
-          title="Capacity Overview"
+          title="Capacity"
           value={`${statistics?.occupiedSeats || 0} / ${
             statistics?.totalCapacity || 0
           }`}
@@ -87,9 +95,51 @@ const AdminDashboard = () => {
 
       </div>
 
-      {/* Capacity Progress */}
+      {/* Student Statistics */}
 
-      <div className="mt-8 rounded-2xl bg-white p-6 shadow">
+      <h2 className="mt-10 mb-4 text-xl font-semibold text-slate-700">
+        Student Statistics
+      </h2>
+
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+
+        <DashboardCard
+          title="Total Students"
+          value={statistics?.totalStudents || 0}
+          icon={<FaUserGraduate size={26} />}
+          iconBg="bg-purple-100"
+          iconColor="text-purple-600"
+        />
+
+        <DashboardCard
+          title="Active Students"
+          value={statistics?.activeStudents || 0}
+          icon={<FaUserCheck size={26} />}
+          iconBg="bg-green-100"
+          iconColor="text-green-600"
+        />
+
+        <DashboardCard
+          title="IELTS Students"
+          value={statistics?.ieltsStudents || 0}
+          icon={<FaBookOpen size={26} />}
+          iconBg="bg-indigo-100"
+          iconColor="text-indigo-600"
+        />
+
+        <DashboardCard
+          title="PTE Students"
+          value={statistics?.pteStudents || 0}
+          icon={<FaClipboardList size={26} />}
+          iconBg="bg-orange-100"
+          iconColor="text-orange-600"
+        />
+
+      </div>
+
+      {/* Capacity Utilization */}
+
+      <div className="mt-10 rounded-2xl bg-white p-6 shadow">
 
         <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Capacity Utilization

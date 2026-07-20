@@ -1,4 +1,5 @@
 const Batch = require("../models/Batch");
+const StudentProfile = require("../models/StudentProfile");
 
 // ======================================
 // Admin Dashboard Statistics
@@ -6,6 +7,10 @@ const Batch = require("../models/Batch");
 
 const getAdminDashboard = async (req, res) => {
   try {
+    // ======================================
+    // Batch Statistics
+    // ======================================
+
     const batches = await Batch.find();
 
     const totalBatches = batches.length;
@@ -32,16 +37,55 @@ const getAdminDashboard = async (req, res) => {
     const availableSeats =
       totalCapacity - occupiedSeats;
 
+    // ======================================
+    // Student Statistics
+    // ======================================
+
+    const totalStudents =
+      await StudentProfile.countDocuments();
+
+    const activeStudents =
+      await StudentProfile.countDocuments({
+        status: "Active",
+      });
+
+    const inactiveStudents =
+      await StudentProfile.countDocuments({
+        status: "Inactive",
+      });
+
+    const ieltsStudents =
+      await StudentProfile.countDocuments({
+        targetExam: "IELTS",
+      });
+
+    const pteStudents =
+      await StudentProfile.countDocuments({
+        targetExam: "PTE",
+      });
+
+    // ======================================
+    // Response
+    // ======================================
+
     res.status(200).json({
       success: true,
 
       statistics: {
+        // Batch Statistics
         totalBatches,
         activeBatches,
         fullBatches,
         totalCapacity,
         occupiedSeats,
         availableSeats,
+
+        // Student Statistics
+        totalStudents,
+        activeStudents,
+        inactiveStudents,
+        ieltsStudents,
+        pteStudents,
       },
     });
 

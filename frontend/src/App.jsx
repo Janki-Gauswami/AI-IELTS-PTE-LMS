@@ -16,6 +16,13 @@ import AddBatch from "./pages/BatchManagement/AddBatch";
 import EditBatch from "./pages/BatchManagement/EditBatch";
 import BatchDetails from "./pages/BatchManagement/BatchDetails";
 
+// Student Management
+import StudentList from "./pages/Admin/StudentManagement/StudentList";
+import AddStudent from "./pages/Admin/StudentManagement/AddStudent";
+import EditStudent from "./pages/Admin/StudentManagement/EditStudent";
+import StudentDetails from "./pages/Admin/StudentManagement/StudentDetails";
+
+
 // Extra Pages
 import Unauthorized from "./pages/Common/Unauthorized";
 import NotFound from "./pages/Common/NotFound";
@@ -83,6 +90,47 @@ function App() {
           </PrivateRoute>
         }
       />
+
+      {/* ========================= */}
+      {/* Student Management */}
+      {/* ========================= */}
+    
+
+<Route
+  path="/admin/students"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <StudentList />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/students/add"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <AddStudent />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/students/edit/:id"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <EditStudent />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/students/:id"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <StudentDetails />
+    </PrivateRoute>
+  }
+/>
 
       {/* ========================= */}
       {/* Teacher Dashboard */}

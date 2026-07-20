@@ -11,8 +11,12 @@ const {
   authorize,
 } = require("../middleware/authMiddleware");
 
+// ======================================
+// Admin Dashboard
+// ======================================
+
 router.get(
-  "/admin",
+  "/stats",
   protect,
   authorize("admin"),
   getAdminDashboard

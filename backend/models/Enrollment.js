@@ -40,7 +40,6 @@ const enrollmentSchema = new mongoose.Schema(
 enrollmentSchema.index(
   {
     student: 1,
-    batch: 1,
   },
   {
     unique: true,

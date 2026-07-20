@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes");
 const batchRoutes = require("./routes/batchRoutes");
 const enrollmentRoutes = require("./routes/enrollmentRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const studentRoutes = require("./routes/studentRoutes");
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.use("/api/v1/batches", batchRoutes);
 app.use("/api/v1/enrollments", enrollmentRoutes);
 
 app.use("/api/v1/dashboard",dashboardRoutes);
+
+app.use("/api/v1/students", studentRoutes);
 
 // ===============================
 // Health Check Route
