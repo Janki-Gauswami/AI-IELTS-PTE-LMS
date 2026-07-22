@@ -7,8 +7,18 @@ import PrivateRoute from "./routes/PrivateRoute";
 
 // Dashboards
 import AdminDashboard from "./pages/Admin/AdminDashboard";
-import TeacherDashboard from "./pages/Teacher/TeacherDashboard";
 import StudentDashboard from "./pages/Student/StudentDashboard";
+
+// Teacher Dashboard
+import Dashboard from "./pages/Teacher/Dashboard";
+import MyBatches from "./pages/Teacher/MyBatches";
+import TodayClasses from "./pages/Teacher/TodayClasses";
+import Profile from "./pages/Teacher/Profile";
+import TeacherDashboardLayout from "./components/teacher/TeacherDashboardLayout";
+import EditProfile from "./pages/Teacher/EditProfile";
+import MyStudents from "./pages/Teacher/MyStudents";
+import Attendance from "./pages/Teacher/Attendance";
+import Tests from "./pages/Teacher/Tests";
 
 // Batch Management
 import BatchList from "./pages/BatchManagement/BatchList";
@@ -21,6 +31,13 @@ import StudentList from "./pages/Admin/StudentManagement/StudentList";
 import AddStudent from "./pages/Admin/StudentManagement/AddStudent";
 import EditStudent from "./pages/Admin/StudentManagement/EditStudent";
 import StudentDetails from "./pages/Admin/StudentManagement/StudentDetails";
+
+// Teacher Management
+import TeacherList from "./pages/Admin/TeacherManagement/TeacherList";
+import AddTeacher from "./pages/Admin/TeacherManagement/AddTeacher";
+import EditTeacher from "./pages/Admin/TeacherManagement/EditTeacher";
+import TeacherDetails from "./pages/Admin/TeacherManagement/TeacherDetails";
+import AssignBatch from "./pages/Admin/TeacherManagement/AssignBatch";
 
 
 // Extra Pages
@@ -132,18 +149,113 @@ function App() {
   }
 />
 
-      {/* ========================= */}
-      {/* Teacher Dashboard */}
-      {/* ========================= */}
+{/* ============================
+    Teacher Management Routes
+============================= */}
+<Route
+  path="/admin/teachers"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <TeacherList />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/teachers/add"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <AddTeacher />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/teachers/edit/:id"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <EditTeacher />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/teachers/:id"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <TeacherDetails />
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path="/admin/teachers/assign-batch"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <AssignBatch />
+    </PrivateRoute>
+  }
+/>
+
+  {/* ========================= */}
+  {/* Teacher Dashboard */}
+  {/* ========================= */}
+
+  <Route
+    path="/teacher"
+    element={
+      <PrivateRoute allowedRoles={["teacher"]}>
+        <TeacherDashboardLayout />
+      </PrivateRoute>
+    }
+  >
+    <Route
+      index
+      element={<Dashboard />}
+    />
+
+    <Route
+      path="dashboard"
+      element={<Dashboard />}
+    />
+
+    <Route
+      path="my-batches"
+      element={<MyBatches />}
+    />
+
+    <Route
+      path="today-classes"
+      element={<TodayClasses />}
+    />
+
+    <Route
+      path="profile"
+      element={<Profile />}
+    />
 
       <Route
-        path="/teacher"
-        element={
-          <PrivateRoute allowedRoles={["teacher"]}>
-            <TeacherDashboard />
-          </PrivateRoute>
-        }
-      />
+  path="edit-profile"
+  element={<EditProfile />}
+/>
+
+<Route
+  path="my-students"
+  element={<MyStudents />}
+/>
+
+<Route
+  path="attendance"
+  element={<Attendance />}
+/>
+
+<Route
+  path="tests"
+  element={<Tests />}
+/>
+
+  </Route>
+
 
       {/* ========================= */}
       {/* Student Dashboard */}

@@ -383,11 +383,12 @@ exports.getAllStudents = async (req, res) => {
 // ==========================================
 // Get Student By ID
 // ==========================================
-
 exports.getStudentById = async (req, res) => {
   try {
-
     const { id } = req.params;
+
+    console.log("\n========== GET STUDENT BY ID ==========");
+    console.log("Student ID:", id);
 
     // ==========================================
     // Find Student Profile
@@ -399,6 +400,9 @@ exports.getStudentById = async (req, res) => {
       path: "userId",
       select: "-password",
     });
+
+    console.log("Student Profile:");
+    console.log(studentProfile);
 
     if (!studentProfile) {
       return res.status(404).json({
@@ -421,24 +425,22 @@ exports.getStudentById = async (req, res) => {
       },
     });
 
+    console.log("Enrollment:");
+    console.log(enrollment);
+
     // ==========================================
     // Ownership Validation
     // ==========================================
 
-    // Student can access only own profile
     if (req.user.role === "student") {
-
       if (req.user._id.toString() !== id) {
         return res.status(403).json({
           success: false,
           message: "You can only access your own profile.",
         });
       }
-
     }
 
-    // Teacher can only access students
-    // from assigned batches
     if (req.user.role === "teacher") {
 
       if (!enrollment || !enrollment.batch) {
@@ -448,7 +450,10 @@ exports.getStudentById = async (req, res) => {
         });
       }
 
-      const teacherAssigned = enrollment.batch.teachers.some(
+      // Prevent crash if teachers is undefined
+      const teachers = enrollment.batch.teachers || [];
+
+      const teacherAssigned = teachers.some(
         (teacherId) =>
           teacherId.toString() === req.user._id.toString()
       );
@@ -460,14 +465,16 @@ exports.getStudentById = async (req, res) => {
             "You can only access students from your assigned batches.",
         });
       }
-
     }
+
+    console.log("Returning Student Successfully");
+    console.log("=====================================\n");
 
     // ==========================================
     // Success Response
     // ==========================================
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: {
         user: studentProfile.userId,
@@ -478,9 +485,14 @@ exports.getStudentById = async (req, res) => {
 
   } catch (error) {
 
-    res.status(500).json({
+    console.error("\n========== GET STUDENT ERROR ==========");
+    console.error(error);
+    console.error("=======================================\n");
+
+    return res.status(500).json({
       success: false,
       message: error.message,
+      stack: error.stack,
     });
 
   }
@@ -583,76 +595,84 @@ exports.updateStudent = async (req, res) => {
       status ?? studentProfile.status;
 
     await studentProfile.save();
+// ==========================================
+// Update Batch (Optional)
+// ==========================================
 
-    // ==========================================
-    // Update Batch (Optional)
-    // ==========================================
+if (batchId) {
 
-    if (batchId) {
-      const enrollment = await Enrollment.findOne({
-        student: id,
-        });
+  const enrollment = await Enrollment.findOne({
+    student: id,
+  });
 
-      if (!enrollment) {
-        return res.status(404).json({
-          success: false,
-          message: "Enrollment not found.",
-        });
-      }
+  if (!enrollment) {
+    return res.status(404).json({
+      success: false,
+      message: "Enrollment not found.",
+    });
+  }
 
-      // Only transfer if batch changes
-      if (enrollment.batch.toString() !== batchId) {
+  // Only transfer if batch changes
+  if (enrollment.batch.toString() !== batchId) {
 
-        const oldBatch = await Batch.findById(enrollment.batch);
-        const newBatch = await Batch.findById(batchId);
+    console.log("Old Batch ID:", enrollment.batch);
+    console.log("New Batch ID:", batchId);
 
-        if (!newBatch) {
-          return res.status(404).json({
-            success: false,
-            message: "New batch not found.",
-          });
-        }
+    const oldBatch = await Batch.findById(enrollment.batch);
+    const newBatch = await Batch.findById(batchId);
 
-        if (newBatch.status !== "Active") {
-            return res.status(400).json({
-                success: false,
-                message: "Students can only be transferred to an active batch.",
-            });
-        }
+    console.log("Old Batch:", oldBatch);
+    console.log("New Batch:", newBatch);
 
-        if (newBatch.currentStrength >= newBatch.capacity) {
-          return res.status(400).json({
-            success: false,
-            message: "New batch is already full.",
-          });
-        }
-
-        // Update strengths
-        await Batch.updateOne(
-          { _id: oldBatch._id },
-          {
-            $inc: {
-              currentStrength: -1,
-            },
-          }
-        );
-
-        await Batch.updateOne(
-          { _id: newBatch._id },
-          {
-            $inc: {
-              currentStrength: 1,
-            },
-          }
-        );
-
-        // Update enrollment
-        enrollment.batch = batchId;
-
-        await enrollment.save();
-      }
+    if (!newBatch) {
+      return res.status(404).json({
+        success: false,
+        message: "New batch not found.",
+      });
     }
 
+    if (newBatch.status !== "Active") {
+      return res.status(400).json({
+        success: false,
+        message: "Students can only be transferred to an active batch.",
+      });
+    }
+
+    if (newBatch.currentStrength >= newBatch.capacity) {
+      return res.status(400).json({
+        success: false,
+        message: "New batch is already full.",
+      });
+    }
+
+    // Decrease old batch strength only if it exists
+    if (oldBatch) {
+      await Batch.updateOne(
+        { _id: oldBatch._id },
+        {
+          $inc: {
+            currentStrength: -1,
+          },
+        }
+      );
+    }
+
+    // Increase new batch strength
+    await Batch.updateOne(
+      { _id: newBatch._id },
+      {
+        $inc: {
+          currentStrength: 1,
+        },
+      }
+    );
+
+    // Update enrollment
+    enrollment.batch = batchId;
+
+    await enrollment.save();
+  }
+}
     // ==========================================
     // Return Updated Student
     // ==========================================

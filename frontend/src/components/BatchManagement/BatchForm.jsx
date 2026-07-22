@@ -5,6 +5,7 @@ const BatchForm = ({ initialValues, onSubmit, loading }) => {
     initialValues || {
       batchName: "",
       course: "IELTS",
+      batchType: "Regular",
       teachers: [],
       days: [],
       startTime: "",
@@ -91,6 +92,29 @@ const BatchForm = ({ initialValues, onSubmit, loading }) => {
           <option>IELTS</option>
           <option>PTE</option>
         </select>
+      </div>
+
+      {/* Batch Type */}
+
+      <div>
+
+        <label className="font-semibold">
+          Batch Type
+        </label>
+
+        <select
+          name="batchType"
+          value={formData.batchType}
+          onChange={handleChange}
+          className="w-full mt-2 border rounded-lg p-3"
+        >
+          <option value="Regular">Regular</option>
+          <option value="Weekend">Weekend</option>
+          <option value="Crash Course">Crash Course</option>
+          <option value="Online">Online</option>
+          <option value="Offline">Offline</option>
+        </select>
+
       </div>
 
       {/* Schedule */}

@@ -79,8 +79,8 @@ const studentProfileSchema = new mongoose.Schema(
     goal: {
         type: String,
         enum: [
-            "Study",
-            "Work",
+            "Study Visa",
+            "Work Visa",
             "PR",
             "Migration",
             "Other",

@@ -68,58 +68,48 @@ export const sidebarMenus = {
     },
   ],
 
-  teacher: [
-    {
-      title: "Dashboard",
-      icon: FaHome,
-      path: "/teacher",
-    },
-    {
-      title: "Students",
-      icon: FaUserGraduate,
-      path: "/teacher/students",
-    },
-    {
-      title: "Batches",
-      icon: FaUsers,
-      path: "/teacher/batches",
-    },
-    {
-      title: "Learning Materials",
-      icon: FaBookOpen,
-      path: "/teacher/materials",
-    },
-    {
-      title: "Mock Tests",
-      icon: FaClipboardList,
-      path: "/teacher/mock-tests",
-    },
-    {
-      title: "Student Progress",
-      icon: FaChartBar,
-      path: "/teacher/progress",
-    },
-    {
-      title: "AI Reports",
-      icon: FaRobot,
-      path: "/teacher/ai-reports",
-    },
-    {
-      title: "My Profile",
-      icon: FaUserCircle,
-      path: "/teacher/profile",
-    },
-    {
-      title: "Settings",
-      icon: FaCog,
-      path: "/teacher/settings",
-    },
-    {
-      title: "Logout",
-      icon: FaSignOutAlt,
-      path: "/logout",
-    },
-  ],
+teacher: [
+  {
+    title: "Dashboard",
+    icon: FaHome,
+    path: "/teacher/dashboard",
+  },
+  {
+    title: "My Batches",
+    icon: FaUsers,
+    path: "/teacher/my-batches",
+  },
+  {
+    title: "My Students",
+    icon: FaUserGraduate,
+    path: "/teacher/my-students",
+  },
+  {
+    title: "Attendance",
+    icon: FaClipboardList,
+    path: "/teacher/attendance",
+  },
+  {
+    title: "Today's Classes",
+    icon: FaBookOpen,
+    path: "/teacher/today-classes",
+  },
+  {
+    title: "Tests",
+    icon: FaFileAlt,
+    path: "/teacher/tests",
+  },
+  {
+    title: "Profile",
+    icon: FaUserCircle,
+    path: "/teacher/profile",
+  },
+  {
+    title: "Logout",
+    icon: FaSignOutAlt,
+    path: "/logout",
+  },
+],
 
   student: [
     {

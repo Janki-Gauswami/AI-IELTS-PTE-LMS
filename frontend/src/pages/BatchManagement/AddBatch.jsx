@@ -22,6 +22,7 @@ const AddBatch = () => {
       const payload = {
         batchName: formData.batchName,
         course: formData.course,
+        batchType: formData.batchType,   // <-- ADD THIS
         teachers: formData.teachers,
 
         schedule: {

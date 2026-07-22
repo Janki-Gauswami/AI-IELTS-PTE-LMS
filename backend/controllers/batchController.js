@@ -9,6 +9,7 @@ const createBatch = async (req, res) => {
     const {
       batchName,
       course,
+      batchType,
       teachers,
       schedule,
       startDate,
@@ -17,7 +18,6 @@ const createBatch = async (req, res) => {
       description,
       status,
     } = req.body;
-
     // ==========================================
     // Required Field Validation
     // ==========================================
@@ -25,6 +25,7 @@ const createBatch = async (req, res) => {
     if (
       !batchName ||
       !course ||
+      !batchType ||
       !schedule ||
       !startDate ||
       !endDate ||
@@ -95,6 +96,7 @@ const createBatch = async (req, res) => {
     const batch = await Batch.create({
       batchName,
       course,
+      batchType,
       teachers,
       schedule,
       startDate,
@@ -104,7 +106,6 @@ const createBatch = async (req, res) => {
       status,
       createdBy: req.user._id,
     });
-
     return res.status(201).json({
       success: true,
       message: "Batch created successfully.",
