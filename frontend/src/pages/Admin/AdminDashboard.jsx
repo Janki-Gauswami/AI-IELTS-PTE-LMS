@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 import useDashboard from "../../hooks/useDashboard";
+
+import {
+  getAttendanceCards,
+} from "../../services/attendanceDashboardService";
 
 import {
   FaLayerGroup,
@@ -10,10 +16,58 @@ import {
   FaUserCheck,
   FaBookOpen,
   FaClipboardList,
+  FaCalendarCheck,
+  FaUserTimes,
+  FaClock,
+  FaPercentage,
 } from "react-icons/fa";
 
 const AdminDashboard = () => {
   const { statistics, loading, error } = useDashboard();
+
+  // ==========================================
+  // Attendance Analytics State
+  // ==========================================
+
+  const [attendanceCards, setAttendanceCards] = useState({
+    todayAttendance: 0,
+    present: 0,
+    absent: 0,
+    late: 0,
+    overallPercentage: 0,
+  });
+
+  const [attendanceLoading, setAttendanceLoading] =
+    useState(true);
+
+  // ==========================================
+  // Load Attendance Dashboard
+  // ==========================================
+
+  useEffect(() => {
+    fetchAttendanceCards();
+  }, []);
+
+  const fetchAttendanceCards = async () => {
+    try {
+      setAttendanceLoading(true);
+
+      const cards = await getAttendanceCards();
+
+      setAttendanceCards(cards || {});
+    } catch (error) {
+      console.error(
+        "Attendance Dashboard Error:",
+        error
+      );
+    } finally {
+      setAttendanceLoading(false);
+    }
+  };
+
+  // ==========================================
+  // Dashboard Loading
+  // ==========================================
 
   if (loading) {
     return (
@@ -27,6 +81,10 @@ const AdminDashboard = () => {
     );
   }
 
+  // ==========================================
+  // Dashboard Error
+  // ==========================================
+
   if (error) {
     return (
       <DashboardLayout>
@@ -39,21 +97,70 @@ const AdminDashboard = () => {
 
   return (
     <DashboardLayout>
-      {/* Header */}
+      {/* ==========================================
+          Attendance Statistics
+      ========================================== */}
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">
-          Admin Dashboard
-        </h1>
+      <h2 className="mt-10 mb-4 text-xl font-semibold text-slate-700">
+        Attendance Statistics
+      </h2>
 
-        <p className="mt-2 text-slate-500">
-          Welcome back! Here's an overview of your institute.
-        </p>
-      </div>
+      {attendanceLoading ? (
+        <div className="rounded-2xl bg-white p-8 text-center shadow">
+          <p className="text-slate-500">
+            Loading attendance analytics...
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
 
-      {/* Batch Statistics */}
+          <DashboardCard
+            title="Today's Attendance"
+            value={attendanceCards?.todayAttendance || 0}
+            icon={<FaCalendarCheck size={26} />}
+            iconBg="bg-blue-100"
+            iconColor="text-blue-600"
+          />
 
-      <h2 className="mb-4 text-xl font-semibold text-slate-700">
+          <DashboardCard
+            title="Present"
+            value={attendanceCards?.present || 0}
+            icon={<FaCheckCircle size={26} />}
+            iconBg="bg-green-100"
+            iconColor="text-green-600"
+          />
+
+          <DashboardCard
+            title="Absent"
+            value={attendanceCards?.absent || 0}
+            icon={<FaUserTimes size={26} />}
+            iconBg="bg-red-100"
+            iconColor="text-red-600"
+          />
+
+          <DashboardCard
+            title="Late"
+            value={attendanceCards?.late || 0}
+            icon={<FaClock size={26} />}
+            iconBg="bg-yellow-100"
+            iconColor="text-yellow-600"
+          />
+
+          <DashboardCard
+            title="Overall Attendance"
+            value={`${attendanceCards?.overallPercentage || 0}%`}
+            icon={<FaPercentage size={26} />}
+            iconBg="bg-purple-100"
+            iconColor="text-purple-600"
+          />
+
+        </div>
+      )}
+            {/* ==========================================
+          Batch Statistics
+      ========================================== */}
+
+      <h2 className="mb-4 mt-10 text-xl font-semibold text-slate-700">
         Batch Statistics
       </h2>
 
@@ -94,8 +201,9 @@ const AdminDashboard = () => {
         />
 
       </div>
-
-      {/* Student Statistics */}
+            {/* ==========================================
+          Student Statistics
+      ========================================== */}
 
       <h2 className="mt-10 mb-4 text-xl font-semibold text-slate-700">
         Student Statistics
@@ -136,8 +244,9 @@ const AdminDashboard = () => {
         />
 
       </div>
-
-      {/* Capacity Utilization */}
+            {/* ==========================================
+          Capacity Utilization
+      ========================================== */}
 
       <div className="mt-10 rounded-2xl bg-white p-6 shadow">
 
@@ -145,13 +254,15 @@ const AdminDashboard = () => {
           Capacity Utilization
         </h2>
 
-        <div className="mb-3 flex justify-between text-sm text-slate-600">
+        <div className="mb-3 flex items-center justify-between text-sm text-slate-600">
+
           <span>Occupied Seats</span>
 
           <span>
             {statistics?.occupiedSeats || 0} /{" "}
             {statistics?.totalCapacity || 0}
           </span>
+
         </div>
 
         <div className="h-4 overflow-hidden rounded-full bg-slate-200">
@@ -161,9 +272,11 @@ const AdminDashboard = () => {
             style={{
               width: `${
                 statistics?.totalCapacity
-                  ? (statistics.occupiedSeats /
-                      statistics.totalCapacity) *
-                    100
+                  ? (
+                      (statistics.occupiedSeats /
+                        statistics.totalCapacity) *
+                      100
+                    ).toFixed(0)
                   : 0
               }%`,
             }}
@@ -171,22 +284,41 @@ const AdminDashboard = () => {
 
         </div>
 
-        <div className="mt-4 flex justify-between text-sm">
+        <div className="mt-4 flex items-center justify-between">
 
-          <span className="text-green-600">
-            Available Seats: {statistics?.availableSeats || 0}
-          </span>
+          <div>
 
-          <span className="text-blue-600">
-            Occupied Seats: {statistics?.occupiedSeats || 0}
-          </span>
+            <p className="text-sm text-slate-500">
+              Available Seats
+            </p>
+
+            <h3 className="text-lg font-semibold text-green-600">
+              {statistics?.availableSeats || 0}
+            </h3>
+
+          </div>
+
+          <div className="text-right">
+
+            <p className="text-sm text-slate-500">
+              Occupied Seats
+            </p>
+
+            <h3 className="text-lg font-semibold text-blue-600">
+              {statistics?.occupiedSeats || 0}
+            </h3>
+
+          </div>
 
         </div>
 
       </div>
-    </DashboardLayout>
-  );
-};
+      </DashboardLayout>
+  )
+}
+      // ==========================================
+// Dashboard Card Component
+// ==========================================
 
 const DashboardCard = ({
   title,
@@ -196,13 +328,13 @@ const DashboardCard = ({
   iconColor,
 }) => {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow transition hover:shadow-lg">
+    <div className="group rounded-2xl bg-white p-6 shadow transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 
       <div className="flex items-center justify-between">
 
         <div>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-sm font-medium text-slate-500">
             {title}
           </p>
 
@@ -213,7 +345,7 @@ const DashboardCard = ({
         </div>
 
         <div
-          className={`flex h-14 w-14 items-center justify-center rounded-xl ${iconBg} ${iconColor}`}
+          className={`flex h-14 w-14 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 ${iconBg} ${iconColor}`}
         >
           {icon}
         </div>
@@ -222,6 +354,6 @@ const DashboardCard = ({
 
     </div>
   );
-};
 
+};
 export default AdminDashboard;

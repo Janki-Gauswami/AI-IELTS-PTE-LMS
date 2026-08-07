@@ -1,0 +1,387 @@
+/* ===========================
+   HERO SECTION
+=========================== */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+/* ===========================
+   GRID BACKGROUND
+=========================== */
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37,99,235,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 95%);
+  pointer-events: none;
+}
+
+/* ===========================
+   BLOBS
+=========================== */
+
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: .45;
+}
+
+.hero-blob-1 {
+  width: 380px;
+  height: 380px;
+  background: #60a5fa;
+  top: -120px;
+  left: -80px;
+  animation: blobFloat1 12s ease-in-out infinite;
+}
+
+.hero-blob-2 {
+  width: 420px;
+  height: 420px;
+  background: #38bdf8;
+  right: -120px;
+  bottom: -120px;
+  animation: blobFloat2 14s ease-in-out infinite;
+}
+
+/* ===========================
+   GRADIENT TEXT
+=========================== */
+
+.hero-gradient {
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #0ea5e9,
+    #3b82f6,
+    #2563eb
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s linear infinite;
+}
+
+/* ===========================
+   AI CORE
+=========================== */
+
+.hero-core {
+  position: relative;
+  width: 430px;
+  height: 430px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-center {
+  width: 120px;
+  height: 120px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    0 0 30px rgba(37,99,235,.4),
+    0 0 80px rgba(37,99,235,.3);
+  animation: pulseGlow 3s ease-in-out infinite;
+  z-index: 10;
+}
+
+.hero-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 2px dashed rgba(59,130,246,.35);
+}
+
+.hero-ring-1 {
+  width: 170px;
+  height: 170px;
+  animation: rotateClockwise 12s linear infinite;
+}
+
+.hero-ring-2 {
+  width: 260px;
+  height: 260px;
+  animation: rotateAnti 18s linear infinite;
+}
+
+.hero-ring-3 {
+  width: 360px;
+  height: 360px;
+  animation: rotateClockwise 25s linear infinite;
+}
+
+/* ===========================
+   FEATURE CARDS
+=========================== */
+
+.feature-card {
+  position: absolute;
+  width: 170px;
+  padding: 18px;
+  border-radius: 22px;
+  backdrop-filter: blur(18px);
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.65);
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.08);
+  transition: .35s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:
+    0 20px 45px rgba(37,99,235,.18);
+}
+
+.feature-card h3 {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.feature-card span {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ===========================
+   CARD POSITIONS
+=========================== */
+
+.card-top-left {
+  top: 20px;
+  left: -40px;
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.card-top-right {
+  top: 30px;
+  right: -35px;
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.card-bottom-left {
+  bottom: 30px;
+  left: -50px;
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.card-bottom-right {
+  bottom: 20px;
+  right: -40px;
+  animation: floatSlow 5.5s ease-in-out infinite;
+}
+
+/* ===========================
+   SCROLL INDICATOR
+=========================== */
+
+.scroll-indicator {
+  width: 28px;
+  height: 48px;
+  border: 2px solid #94a3b8;
+  border-radius: 999px;
+  position: relative;
+}
+
+.scroll-indicator::before {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 12px;
+  border-radius: 999px;
+  background: #2563eb;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 8px;
+  animation: scrollDown 2s infinite;
+}
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 30px rgba(37,99,235,.4),
+      0 0 80px rgba(37,99,235,.3);
+  }
+
+  50% {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 50px rgba(37,99,235,.6),
+      0 0 120px rgba(37,99,235,.45);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateAnti {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes gradientMove {
+  from {
+    background-position: 0%;
+  }
+
+  to {
+    background-position: 300%;
+  }
+}
+
+@keyframes blobFloat1 {
+  0% {
+    transform: translate(0,0);
+  }
+
+  50% {
+    transform: translate(50px,40px);
+  }
+
+  100% {
+    transform: translate(0,0);
+  }
+}
+
+@keyframes blobFloat2 {
+  0% {
+    transform: translate(0,0);
+  }
+
+  50% {
+    transform: translate(-40px,-30px);
+  }
+
+  100% {
+    transform: translate(0,0);
+  }
+}
+
+@keyframes scrollDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,0);
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%,16px);
+  }
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width: 1024px) {
+
+  .hero-core {
+    width: 320px;
+    height: 320px;
+    margin-top: 60px;
+  }
+
+  .hero-ring-3 {
+    width: 280px;
+    height: 280px;
+  }
+
+  .feature-card {
+    width: 150px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .hero-core {
+    width: 280px;
+    height: 280px;
+  }
+
+  .hero-center {
+    width: 90px;
+    height: 90px;
+  }
+
+  .hero-ring-1 {
+    width: 140px;
+    height: 140px;
+  }
+
+  .hero-ring-2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-ring-3 {
+    width: 270px;
+    height: 270px;
+  }
+
+  .feature-card {
+    position: static;
+    width: 100%;
+    margin-top: 18px;
+    animation: none;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}

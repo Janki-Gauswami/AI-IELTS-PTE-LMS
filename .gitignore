@@ -1,8 +1,34 @@
+# Node Modules
 node_modules/
+
+# Environment Files
 .env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Build Files
 dist/
 build/
-__pycache__/
-*.pyc
+
+# Vite
+.vite/
+
+# Coverage
+coverage/
+
+# IDE
 .vscode/
-.DS_Store
+.idea/
+
+# Cache
+.cache/
+
+# Package Locks (optional)
+# package-lock.json

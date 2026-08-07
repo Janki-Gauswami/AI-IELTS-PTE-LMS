@@ -7,7 +7,7 @@ const DashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex h-screen bg-slate-100">
 
       <Sidebar
         collapsed={collapsed}
@@ -19,9 +19,7 @@ const DashboardLayout = ({ children }) => {
         <TopNavbar />
 
         <main className="flex-1 overflow-y-auto p-8">
-
           {children}
-
         </main>
 
       </div>

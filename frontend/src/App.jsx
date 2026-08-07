@@ -9,6 +9,13 @@ import PrivateRoute from "./routes/PrivateRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 
+// Teacher
+import AttendanceHistory from "./pages/Teacher/AttendanceHistory";
+
+// Admin
+import AdminAttendanceHistory from "./pages/Admin/AdminAttendanceHistory";
+import AttendanceReports from "./pages/Admin/AttendanceReports";
+
 // Teacher Dashboard
 import Dashboard from "./pages/Teacher/Dashboard";
 import MyBatches from "./pages/Teacher/MyBatches";
@@ -67,6 +74,15 @@ function App() {
           </PrivateRoute>
         }
       />
+
+      <Route
+  path="/admin/attendance-reports"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <AttendanceReports />
+    </PrivateRoute>
+  }
+/>vv
 
       {/* ========================= */}
       {/* Batch Management */}
@@ -197,6 +213,15 @@ function App() {
   }
 />
 
+<Route
+  path="/admin/attendance-history"
+  element={
+    <PrivateRoute allowedRoles={["admin"]}>
+      <AdminAttendanceHistory />
+    </PrivateRoute>
+  }
+/>
+
   {/* ========================= */}
   {/* Teacher Dashboard */}
   {/* ========================= */}
@@ -247,6 +272,11 @@ function App() {
 <Route
   path="attendance"
   element={<Attendance />}
+/>
+
+<Route
+  path="attendance-history"
+  element={<AttendanceHistory />}
 />
 
 <Route

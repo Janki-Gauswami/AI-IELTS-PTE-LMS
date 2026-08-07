@@ -1,92 +1,146 @@
 import { Link } from "react-router-dom";
-import HeroImage from "../../../assets/images/heroimg.png";
-import { FaCheckCircle, FaPlayCircle } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaPlay,
+  FaBrain,
+  FaChartLine,
+  FaMicrophoneAlt,
+  FaBookOpen,
+  FaRobot,
+} from "react-icons/fa";
+import "./Hero.css";
 
 const Hero = () => {
   return (
     <section
       id="home"
-      className="bg-gradient-to-b from-sky-50 via-white to-white"
+      className="hero-section relative overflow-hidden bg-white"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      {/* Background */}
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="hero-blob hero-blob-1"></div>
+      <div className="hero-blob hero-blob-2"></div>
+      <div className="hero-grid"></div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 min-h-[calc(100vh-80px)] flex items-center">
+
+        <div className="grid lg:grid-cols-2 gap-20 items-center w-full">
 
           {/* LEFT */}
 
           <div>
 
-            {/* Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-5 py-2">
 
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-5 py-2 text-blue-700 font-semibold text-sm">
+              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
 
-              ⭐ Trusted by 5,000+ Students
+              <span className="font-medium text-blue-700">
+
+                AI Powered IELTS & PTE Platform
+
+              </span>
 
             </div>
 
-            {/* Heading */}
-
             <h1 className="mt-8 text-5xl lg:text-7xl font-black leading-tight text-slate-900">
 
-              Master IELTS &
-              <span className="text-blue-600"> PTE </span>
+              Learn Smarter
 
               <br />
 
-              with AI-Powered
-              <br />
+              with
 
-              Learning
+              <span className="hero-gradient">
+
+                {" "}Artificial Intelligence
+
+              </span>
 
             </h1>
 
-            {/* Description */}
+            <p className="mt-8 max-w-xl text-lg leading-9 text-slate-600">
 
-            <p className="mt-8 text-xl text-slate-600 leading-9 max-w-xl">
-
-              Personalized study plans, AI band prediction,
-              mock examinations, analytics and expert guidance —
+              Personalized study plans, AI Band Prediction,
+              Speaking Evaluation, Analytics and Expert Mentorship—
               everything you need to achieve your dream score.
 
             </p>
-
-            {/* Buttons */}
 
             <div className="mt-10 flex flex-wrap gap-5">
 
               <Link
                 to="/login"
-                className="rounded-xl bg-blue-600 px-8 py-4 text-white font-semibold hover:bg-blue-700 transition"
+                className="group rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-2xl"
               >
+
                 Get Started
+
+                <FaArrowRight className="inline ml-2 transition-transform group-hover:translate-x-1" />
+
               </Link>
 
               <button
-                className="flex items-center gap-3 rounded-xl border border-slate-300 px-8 py-4 font-semibold hover:bg-slate-100 transition"
+                className="rounded-xl border border-slate-300 bg-white px-8 py-4 font-semibold transition hover:bg-slate-50"
               >
-                <FaPlayCircle className="text-blue-600 text-xl" />
+
+                <FaPlay className="inline mr-2 text-blue-600" />
+
                 Watch Demo
+
               </button>
 
             </div>
 
-            {/* Highlights */}
+            {/* Stats */}
 
-            <div className="mt-10 flex flex-col gap-4 text-slate-700">
+            <div className="mt-14 grid grid-cols-3 gap-8">
 
-              <div className="flex items-center gap-3">
-                <FaCheckCircle className="text-green-500" />
-                AI Band Prediction
+              <div>
+
+                <h2 className="text-3xl font-bold text-blue-600">
+
+                  50K+
+
+                </h2>
+
+                <p className="mt-1 text-sm text-slate-500">
+
+                  Practice Questions
+
+                </p>
+
               </div>
 
-              <div className="flex items-center gap-3">
-                <FaCheckCircle className="text-green-500" />
-                1000+ Practice Questions
+              <div>
+
+                <h2 className="text-3xl font-bold text-cyan-600">
+
+                  8.5+
+
+                </h2>
+
+                <p className="mt-1 text-sm text-slate-500">
+
+                  Avg. Band Score
+
+                </p>
+
               </div>
 
-              <div className="flex items-center gap-3">
-                <FaCheckCircle className="text-green-500" />
-                Expert Teacher Support
+              <div>
+
+                <h2 className="text-3xl font-bold text-purple-600">
+
+                  95%
+
+                </h2>
+
+                <p className="mt-1 text-sm text-slate-500">
+
+                  Success Rate
+
+                </p>
+
               </div>
 
             </div>
@@ -95,23 +149,82 @@ const Hero = () => {
 
           {/* RIGHT */}
 
-          <div className="relative">
+          <div className="relative flex justify-center items-center">
 
-            {/* Glow */}
+            {/* AI Core */}
 
-            <div className="absolute -top-10 -left-10 h-72 w-72 rounded-full bg-blue-300/20 blur-[100px]"></div>
+            <div className="hero-core">
 
-            <img
-              src={HeroImage}
-              alt="Hero"
-              className="relative z-10 w-full"
-            />
+              <div className="hero-ring hero-ring-1"></div>
+
+              <div className="hero-ring hero-ring-2"></div>
+
+              <div className="hero-ring hero-ring-3"></div>
+
+              <div className="hero-center">
+
+                <FaRobot className="text-6xl text-white" />
+
+              </div>
+
+            </div>
+
+            {/* Card */}
+
+            <div className="feature-card card-top-left">
+
+              <FaBrain className="text-blue-600 text-3xl" />
+
+              <h3>AI Prediction</h3>
+
+              <span>Band 8.5</span>
+
+            </div>
+
+            <div className="feature-card card-top-right">
+
+              <FaChartLine className="text-green-600 text-3xl" />
+
+              <h3>Analytics</h3>
+
+              <span>82% Progress</span>
+
+            </div>
+
+            <div className="feature-card card-bottom-left">
+
+              <FaMicrophoneAlt className="text-red-500 text-3xl" />
+
+              <h3>Speaking</h3>
+
+              <span>Realtime Feedback</span>
+
+            </div>
+
+            <div className="feature-card card-bottom-right">
+
+              <FaBookOpen className="text-purple-600 text-3xl" />
+
+              <h3>Study Planner</h3>
+
+              <span>Daily Goals</span>
+
+            </div>
 
           </div>
 
         </div>
 
       </div>
+
+      {/* Scroll */}
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+
+        <div className="scroll-indicator"></div>
+
+      </div>
+
     </section>
   );
 };

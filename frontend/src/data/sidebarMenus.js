@@ -12,6 +12,7 @@ import {
   FaUserCircle,
   FaFileAlt,
   FaGraduationCap,
+  FaHistory,
 } from "react-icons/fa";
 
 export const sidebarMenus = {
@@ -41,6 +42,16 @@ export const sidebarMenus = {
       icon: FaUsers,
       path: "/admin/batches",
     },
+    {
+  title: "Attendance History",
+  icon: FaHistory,
+  path: "/admin/attendance-history",
+},
+{
+  title: "Attendance Reports",
+  icon: FaFileAlt,
+  path: "/admin/attendance-reports",
+},
     {
       title: "Mock Tests",
       icon: FaClipboardList,
@@ -89,6 +100,11 @@ teacher: [
     icon: FaClipboardList,
     path: "/teacher/attendance",
   },
+  {
+  title: "Attendance History",
+  icon: FaHistory,
+  path: "/teacher/attendance-history",
+},
   {
     title: "Today's Classes",
     icon: FaBookOpen,
