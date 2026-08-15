@@ -13,6 +13,7 @@ import {
   FaFileAlt,
   FaGraduationCap,
   FaHistory,
+  FaBook,
 } from "react-icons/fa";
 
 export const sidebarMenus = {
@@ -32,16 +33,22 @@ export const sidebarMenus = {
       icon: FaChalkboardTeacher,
       path: "/admin/teachers",
     },
+     {
+      title: "Batches",
+      icon: FaUsers,
+      path: "/admin/batches",
+    },
+    {
+  title: "Learning Materials",
+  path: "/admin/learning-materials",
+  icon: FaBook,
+},
     {
       title: "Courses",
       icon: FaBookOpen,
       path: "/admin/courses",
     },
-    {
-      title: "Batches",
-      icon: FaUsers,
-      path: "/admin/batches",
-    },
+   
     {
   title: "Attendance History",
   icon: FaHistory,
@@ -111,6 +118,11 @@ teacher: [
     path: "/teacher/today-classes",
   },
   {
+  title: "Learning Materials",
+  path: "/teacher/learning-materials",
+  icon: FaBook,
+},
+  {
     title: "Tests",
     icon: FaFileAlt,
     path: "/teacher/tests",
@@ -138,6 +150,11 @@ teacher: [
       icon: FaGraduationCap,
       path: "/student/courses",
     },
+      {
+  title: "Learning Materials",
+  path: "/student/learning-materials",
+  icon: FaBook,
+},
     {
       title: "Practice",
       icon: FaBookOpen,

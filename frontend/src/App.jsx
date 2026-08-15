@@ -15,6 +15,10 @@ import AttendanceHistory from "./pages/Teacher/AttendanceHistory";
 // Admin
 import AdminAttendanceHistory from "./pages/Admin/AdminAttendanceHistory";
 import AttendanceReports from "./pages/Admin/AttendanceReports";
+import LearningMaterials from "./pages/Admin/LearningMaterials/LearningMaterials";
+import AddMaterial from "./pages/Admin/LearningMaterials/AddMaterial";
+import EditMaterial from "./pages/Admin/LearningMaterials/EditMaterial";
+
 
 // Teacher Dashboard
 import Dashboard from "./pages/Teacher/Dashboard";
@@ -26,6 +30,8 @@ import EditProfile from "./pages/Teacher/EditProfile";
 import MyStudents from "./pages/Teacher/MyStudents";
 import Attendance from "./pages/Teacher/Attendance";
 import Tests from "./pages/Teacher/Tests";
+import TeacherLearningMaterials from "./pages/Teacher/LearningMaterials";
+import TeacherAddLearningMaterial from "./pages/Teacher/AddLearningMaterial";
 
 // Batch Management
 import BatchList from "./pages/BatchManagement/BatchList";
@@ -38,6 +44,7 @@ import StudentList from "./pages/Admin/StudentManagement/StudentList";
 import AddStudent from "./pages/Admin/StudentManagement/AddStudent";
 import EditStudent from "./pages/Admin/StudentManagement/EditStudent";
 import StudentDetails from "./pages/Admin/StudentManagement/StudentDetails";
+import StudentLearningMaterials from "./pages/Student/LearningMaterials";
 
 // Teacher Management
 import TeacherList from "./pages/Admin/TeacherManagement/TeacherList";
@@ -82,8 +89,22 @@ function App() {
       <AttendanceReports />
     </PrivateRoute>
   }
-/>vv
+/>
 
+<Route
+  path="/admin/learning-materials"
+  element={
+    <LearningMaterials />
+  }
+/>
+<Route
+  path="/admin/learning-materials/add"
+  element={<AddMaterial />}
+/>
+<Route
+  path="/admin/learning-materials/edit/:id"
+  element={<EditMaterial />}
+/>
       {/* ========================= */}
       {/* Batch Management */}
       {/* ========================= */}
@@ -283,6 +304,18 @@ function App() {
   path="tests"
   element={<Tests />}
 />
+<Route
+  path="/teacher/learning-materials"
+  element={
+    <TeacherLearningMaterials />
+  }
+/>
+<Route
+  path="/teacher/learning-materials/add"
+  element={
+    <TeacherAddLearningMaterial />
+  }
+/>
 
   </Route>
 
@@ -299,6 +332,14 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route
+  path="/student/learning-materials"
+  element={
+    <PrivateRoute allowedRoles={["student"]}>
+      <StudentLearningMaterials />
+    </PrivateRoute>
+  }
+/>
 
       {/* ========================= */}
       {/* Unauthorized */}
