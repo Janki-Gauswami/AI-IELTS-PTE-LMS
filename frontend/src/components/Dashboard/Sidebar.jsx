@@ -7,12 +7,39 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
+// Items that belong exclusively to IELTS track (student sidebar)
+const IELTS_ONLY_PATHS = [
+  "/student/ielts",
+  "/student/ielts/tests",
+  "/student/ielts/tests/attempts",
+];
+
+// Items that belong exclusively to PTE track (student sidebar)
+const PTE_ONLY_PATHS = [
+  "/student/pte/tests",
+  "/student/pte/tests/attempts",
+];
+
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const { user, logout } = useAuth();
 
   const role = user?.role || "admin";
+  const targetExam = user?.targetExam || null; // "IELTS", "PTE", or null (admin/teacher always null)
 
-  const menuItems = sidebarMenus[role] || [];
+  const rawMenuItems = sidebarMenus[role] || [];
+
+  // Filter menu items for students based on their target exam
+  const menuItems = rawMenuItems.filter((item) => {
+    if (role !== "student" || !targetExam) return true; // No filtering for admin/teacher or if no targetExam set
+
+    const isIeltsOnly = IELTS_ONLY_PATHS.includes(item.path);
+    const isPteOnly = PTE_ONLY_PATHS.includes(item.path);
+
+    if (isIeltsOnly && targetExam !== "IELTS") return false;
+    if (isPteOnly && targetExam !== "PTE") return false;
+
+    return true;
+  });
 
   const panelTitle = {
     admin: "Admin Panel",
@@ -32,6 +59,8 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         h-screen
         sticky
         top-0
+        flex
+        flex-col
         transition-all
         duration-300
         ${collapsed ? "w-24" : "w-72"}
@@ -39,7 +68,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     >
       {/* Logo */}
 
-      <div className="flex h-20 items-center justify-between border-b border-slate-700 px-6">
+      <div className="flex h-20 items-center justify-between border-b border-slate-700 px-6 shrink-0">
 
         {!collapsed && (
           <div>
@@ -64,7 +93,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
       {/* Navigation */}
 
-      <nav className="mt-6 px-3">
+      <nav className="mt-6 px-3 flex-1 overflow-y-auto pb-24">
 
         {menuItems
           .filter(item => item.title !== "Logout")
@@ -109,7 +138,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
       {/* Logout */}
 
-      <div className="absolute bottom-6 w-full px-3">
+      <div className="p-3 border-t border-slate-800 bg-slate-900 shrink-0">
 
         <button
           onClick={handleLogout}
@@ -139,4 +168,4 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   );
 };
 
-export default Sidebar;
+export default Sidebar;

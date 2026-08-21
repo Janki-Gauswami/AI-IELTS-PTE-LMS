@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const StudentProfile = require("../models/StudentProfile");
 const generateToken = require("../utils/generateToken");
 
 const login = async (req, res) => {
@@ -45,16 +46,32 @@ const login = async (req, res) => {
     // Generate JWT
     const token = generateToken(user._id);
 
+    // For students, load their target exam from profile
+    let targetExam = null;
+    let targetBand = null;
+    if (user.role === "student") {
+      try {
+        const profile = await StudentProfile.findOne({ userId: user._id }).lean();
+        targetExam = profile?.targetExam || null;
+        targetBand = profile?.targetBand || null;
+      } catch (_) {
+        // Non-critical — proceed without profile data
+      }
+    }
+
     return res.status(200).json({
       success: true,
       message: "Login successful.",
       token,
       user: {
         id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
         profilePicture: user.profilePicture,
+        targetExam,
+        targetBand,
       },
     });
 
@@ -76,12 +93,34 @@ const logout = (req, res) => {
 };
 
 const getCurrentUser = async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const role = req.user.role;
 
-    return res.status(200).json({
-        success: true,
-        user: req.user
-    });
+      let targetExam = req.user.targetExam || null;
+      let targetBand = req.user.targetBand || null;
 
+      // Re-fetch from StudentProfile to ensure latest data
+      if (role === "student") {
+        const profile = await StudentProfile.findOne({ userId }).lean();
+        targetExam = profile?.targetExam || null;
+        targetBand = profile?.targetBand || null;
+      }
+
+      return res.status(200).json({
+          success: true,
+          user: {
+            ...req.user,
+            targetExam,
+            targetBand,
+          },
+      });
+    } catch (error) {
+      return res.status(200).json({
+          success: true,
+          user: req.user,
+      });
+    }
 };
 
 
@@ -89,4 +128,4 @@ module.exports = {
   login,
   logout,
   getCurrentUser,
-};
+};
