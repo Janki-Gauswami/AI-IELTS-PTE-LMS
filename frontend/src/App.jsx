@@ -209,8 +209,8 @@ import AssignBatch from "./pages/Admin/TeacherManagement/AssignBatch";
 // Extra Pages
 // ======================================================
 
-import Unauthorized from "./pages/Common/Unauthorized";
-import NotFound from "./pages/Common/NotFound";
+import Unauthorized from "./pages/common/Unauthorized";
+import NotFound from "./pages/common/NotFound";
 
 // ======================================================
 // APP
