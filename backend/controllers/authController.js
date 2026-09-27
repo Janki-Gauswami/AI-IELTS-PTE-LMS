@@ -17,7 +17,20 @@ const login = async (req, res) => {
     }
 
     // Find user
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email: email.toLowerCase() });
+
+    // Auto-bootstrap initial admin if DB is fresh
+    if (!user && email.toLowerCase() === "admin@lms.com" && password === "Admin@123") {
+      const hashedPassword = await bcrypt.hash("Admin@123", 10);
+      user = await User.create({
+        name: "System Administrator",
+        email: "admin@lms.com",
+        password: hashedPassword,
+        role: "admin",
+        isActive: true,
+      });
+      console.log("✅ Admin auto-created on initial login.");
+    }
 
     if (!user) {
       return res.status(401).json({

@@ -7,13 +7,21 @@ const connectDB = async () => {
         return;
     }
 
+    if (!process.env.MONGO_URI) {
+        console.error("MONGO_URI environment variable is missing!");
+        return;
+    }
+
     try {
-        const connection = await mongoose.connect(process.env.MONGO_URI);
+        const opts = {
+            serverSelectionTimeoutMS: 5000,
+            connectTimeoutMS: 10000,
+        };
+        const connection = await mongoose.connect(process.env.MONGO_URI, opts);
         isConnected = connection.connections[0].readyState;
         console.log(`MongoDB Connected: ${connection.connection.host}`);
     } catch (error) {
-        console.error("MongoDB Connection Failed");
-        console.error(error.message);
+        console.error("MongoDB Connection Failed:", error.message);
         throw error;
     }
 };
