@@ -33,10 +33,10 @@ import EditMaterial from "./pages/Admin/LearningMaterials/EditMaterial";
 // IELTS Questions
 // ======================================================
 
-import IELTSQuestions from "./pages/admin/IELTS/questions/IELTSQuestions";
-import AddIELTSQuestion from "./pages/admin/IELTS/questions/AddIELTSQuestion";
-import ViewIELTSQuestion from "./pages/admin/IELTS/questions/ViewIELTSQuestion";
-import EditIELTSQuestion from "./pages/admin/IELTS/questions/EditIELTSQuestion";
+import IELTSQuestions from "./pages/Admin/IELTS/Questions/IELTSQuestions";
+import AddIELTSQuestion from "./pages/Admin/IELTS/Questions/AddIELTSQuestion";
+import ViewIELTSQuestion from "./pages/Admin/IELTS/Questions/ViewIELTSQuestion";
+import EditIELTSQuestion from "./pages/Admin/IELTS/Questions/EditIELTSQuestion";
 
 // ======================================================
 // IELTS Practice Tests - Admin / Teacher
@@ -184,7 +184,7 @@ import EditPTELesson from "./pages/Admin/pte/EditPTELesson";
 // PTE Lesson - Student
 // ======================================================
 
-import PTELessonStudy from "./pages/student/pte/PTELessonStudy";
+import PTELessonStudy from "./pages/Student/pte/PTELessonStudy";
 
 // ======================================================
 // PTE Practice Tests - Admin / Teacher
