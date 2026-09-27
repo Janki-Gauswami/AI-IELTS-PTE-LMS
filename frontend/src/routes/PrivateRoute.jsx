@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 const PrivateRoute = ({
   children,
   allowedRoles = [],
+  requiredExam = null,
 }) => {
 
   const {
@@ -63,6 +64,26 @@ const PrivateRoute = ({
         replace
       />
     );
+  }
+
+  // =====================================
+  // Teacher Specialization Check (IELTS vs PTE)
+  // =====================================
+
+  if (user.role === "teacher" && requiredExam) {
+    const specialization = user.specialization;
+    if (
+      specialization &&
+      specialization !== "Both" &&
+      specialization !== requiredExam
+    ) {
+      return (
+        <Navigate
+          to="/unauthorized"
+          replace
+        />
+      );
+    }
   }
 
   // =====================================

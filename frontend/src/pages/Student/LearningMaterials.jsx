@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   getLearningMaterials,
 } from "../../services/learningMaterialService";
 
-
 import DashboardLayout from "../../components/Dashboard/DashboardLayout";
 
 const LearningMaterials = () => {
+  const { user } = useAuth();
+  const studentTrack = user?.targetExam || "IELTS";
+
   // ======================================================
   // State
   // ======================================================
@@ -18,7 +21,6 @@ const LearningMaterials = () => {
 
   const [filters, setFilters] = useState({
     search: "",
-    course: "",
     module: "",
     materialType: "",
   });
@@ -31,7 +33,7 @@ const LearningMaterials = () => {
     fetchMaterials();
   }, [
     filters.search,
-    filters.course,
+    studentTrack,
     filters.module,
     filters.materialType,
   ]);
@@ -43,7 +45,7 @@ const LearningMaterials = () => {
       const response =
         await getLearningMaterials({
           search: filters.search,
-          course: filters.course,
+          course: studentTrack,
           module: filters.module,
           materialType:
             filters.materialType,
@@ -86,7 +88,6 @@ const LearningMaterials = () => {
   const handleClearFilters = () => {
     setFilters({
       search: "",
-      course: "",
       module: "",
       materialType: "",
     });
@@ -229,7 +230,7 @@ const LearningMaterials = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 
           {/* Search */}
 
@@ -247,37 +248,6 @@ const LearningMaterials = () => {
               placeholder="Search materials..."
               className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
-
-          </div>
-
-          {/* Course */}
-
-          <div>
-
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Course
-            </label>
-
-            <select
-              name="course"
-              value={filters.course}
-              onChange={handleFilterChange}
-              className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 outline-none focus:border-blue-500"
-            >
-
-              <option value="">
-                All Courses
-              </option>
-
-              <option value="IELTS">
-                IELTS
-              </option>
-
-              <option value="PTE">
-                PTE
-              </option>
-
-            </select>
 
           </div>
 

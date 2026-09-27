@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import {
   FaArrowRight,
-  FaPlay,
   FaBrain,
   FaChartLine,
   FaMicrophoneAlt,
@@ -78,16 +77,6 @@ const Hero = () => {
                 <FaArrowRight className="inline ml-2 transition-transform group-hover:translate-x-1" />
 
               </Link>
-
-              <button
-                className="rounded-xl border border-slate-300 bg-white px-8 py-4 font-semibold transition hover:bg-slate-50"
-              >
-
-                <FaPlay className="inline mr-2 text-blue-600" />
-
-                Watch Demo
-
-              </button>
 
             </div>
 

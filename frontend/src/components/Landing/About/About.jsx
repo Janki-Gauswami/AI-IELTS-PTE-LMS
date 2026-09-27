@@ -38,11 +38,6 @@ const About = () => {
               study plans into one powerful platform
               for IELTS and PTE preparation.
             </p>
-
-            <button className="mt-10 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition">
-              Get Started
-            </button>
-
           </div>
 
           {/* Right */}

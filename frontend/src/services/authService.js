@@ -42,13 +42,29 @@ export const logout = async () => {
 export const getCurrentUser = async () => {
   try {
     const response = await api.get("/auth/me");
-
     return response.data;
   } catch (error) {
     throw (
       error.response?.data || {
         success: false,
         message: "Something went wrong.",
+      }
+    );
+  }
+};
+
+/**
+ * Update Logged-in User Profile
+ */
+export const updateMyProfile = async (profileData) => {
+  try {
+    const response = await api.put("/auth/me/profile", profileData);
+    return response.data;
+  } catch (error) {
+    throw (
+      error.response?.data || {
+        success: false,
+        message: "Failed to update profile.",
       }
     );
   }
