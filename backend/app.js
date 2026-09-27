@@ -176,11 +176,36 @@ app.use(
   })
 );
 
+let adminSeeded = false;
+const seedDefaultAdmin = async () => {
+  if (adminSeeded) return;
+  try {
+    const User = require("./models/User");
+    const count = await User.countDocuments({ role: "admin" });
+    if (count === 0) {
+      const bcrypt = require("bcryptjs");
+      const hashedPassword = await bcrypt.hash("Admin@123", 10);
+      await User.create({
+        name: "System Administrator",
+        email: "admin@lms.com",
+        password: hashedPassword,
+        role: "admin",
+        isActive: true,
+      });
+      console.log("✅ Auto-seeded default admin (admin@lms.com / Admin@123)");
+    }
+    adminSeeded = true;
+  } catch (err) {
+    console.error("Auto seed admin error:", err.message);
+  }
+};
+
 // Auto-connect to Database for Serverless (Vercel) & Traditional environments
 app.use(async (req, res, next) => {
   try {
     if (process.env.MONGO_URI) {
       await connectDB();
+      await seedDefaultAdmin();
     }
     next();
   } catch (err) {
