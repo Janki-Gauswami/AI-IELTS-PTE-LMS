@@ -5,6 +5,9 @@ import {
   FaEnvelope,
   FaLock,
   FaArrowLeft,
+  FaPhoneAlt,
+  FaTimes,
+  FaHeadset,
 } from "react-icons/fa";
 
 import AuthInput from "./AuthInput";
@@ -16,22 +19,22 @@ const LoginForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    remember: false,
   });
 
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
 
     // Remove error while typing
@@ -84,7 +87,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-center px-8 py-10 lg:px-12">
+    <div className="flex h-full flex-col justify-center px-8 py-10 lg:px-12 relative">
 
       {/* Back Button */}
 
@@ -167,33 +170,16 @@ const LoginForm = () => {
           setShowPassword={setShowPassword}
         />
 
-        {/* Remember Me */}
+        {/* Forgot Password Link */}
 
-        <div className="mt-2 flex items-center justify-between">
-
-          <label className="flex cursor-pointer items-center gap-3">
-
-            <input
-              type="checkbox"
-              name="remember"
-              checked={formData.remember}
-              onChange={handleChange}
-              className="h-4 w-4 accent-blue-600"
-            />
-
-            <span className="text-slate-600">
-              Remember Me
-            </span>
-
-          </label>
-
-          <Link
-            to="/forgot-password"
-            className="font-medium text-blue-600 hover:text-blue-700"
+        <div className="mt-2 flex items-center justify-end">
+          <button
+            type="button"
+            onClick={() => setShowAdminModal(true)}
+            className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition"
           >
             Forgot Password?
-          </Link>
-
+          </button>
         </div>
 
         {/* Button */}
@@ -230,13 +216,85 @@ const LoginForm = () => {
 
       <p className="mt-8 text-center text-slate-500">
 
-        Need an account?
+        Need an account or help?
 
-        <span className="ml-2 cursor-pointer font-semibold text-blue-600 hover:text-blue-700">
+        <button
+          type="button"
+          onClick={() => setShowAdminModal(true)}
+          className="ml-2 font-semibold text-blue-600 hover:text-blue-700 underline"
+        >
           Contact Administrator
-        </span>
+        </button>
 
       </p>
+
+      {/* Administrator Contact Modal */}
+      {showAdminModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 relative border border-slate-100">
+            <button
+              onClick={() => setShowAdminModal(false)}
+              className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 transition"
+            >
+              <FaTimes />
+            </button>
+
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+              <FaHeadset className="text-2xl" />
+            </div>
+
+            <h3 className="text-2xl font-bold text-slate-900">
+              Contact Administrator
+            </h3>
+
+            <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+              To reset your password or activate your LMS student/teacher credentials, please get in touch with the academy administration:
+            </p>
+
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <FaEnvelope />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Admin Email</p>
+                  <a
+                    href="mailto:admin@flyhigh.com"
+                    className="text-sm font-bold text-slate-800 hover:text-blue-600 transition"
+                  >
+                    admin@flyhigh.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                  <FaPhoneAlt />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Help Desk & Phone</p>
+                  <a
+                    href="tel:+919876543210"
+                    className="text-sm font-bold text-slate-800 hover:text-emerald-600 transition"
+                  >
+                    +91 98765 43210
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowAdminModal(false)}
+                className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

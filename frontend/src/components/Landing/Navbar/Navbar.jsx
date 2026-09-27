@@ -88,16 +88,9 @@ const Navbar = () => {
 
           <Link
             to="/login"
-            className="font-semibold text-blue-600 hover:text-blue-700 transition"
+            className="rounded-xl bg-blue-600 px-6 py-2.5 text-white font-semibold hover:bg-blue-700 transition shadow-sm"
           >
             Login
-          </Link>
-
-          <Link
-            to="/login"
-            className="rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition"
-          >
-            Get Started
           </Link>
 
         </div>
@@ -148,17 +141,9 @@ const Navbar = () => {
             <Link
               to="/login"
               onClick={() => setIsOpen(false)}
-              className="text-blue-600 font-semibold"
+              className="bg-blue-600 text-white py-3 rounded-xl text-center font-semibold hover:bg-blue-700 transition"
             >
               Login
-            </Link>
-
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="bg-blue-600 text-white py-3 rounded-xl text-center font-semibold"
-            >
-              Get Started
             </Link>
 
           </div>

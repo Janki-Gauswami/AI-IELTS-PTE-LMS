@@ -110,6 +110,17 @@ export const AuthProvider = ({ children }) => {
 
   }, []);
 
+  // ============================
+  // Update User In State
+  // ============================
+
+  const updateUser = (updatedUserData) => {
+    setUser((prev) => ({
+      ...prev,
+      ...updatedUserData,
+    }));
+  };
+
   return (
 
     <AuthContext.Provider
@@ -119,6 +130,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         loadUser,
+        updateUser,
       }}
     >
 
