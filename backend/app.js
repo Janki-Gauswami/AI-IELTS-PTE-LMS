@@ -141,6 +141,23 @@ const contactRoutes = require(
 */
 
 const app = express();
+const connectDB = require("./config/database");
+
+// Auto-connect to Database for Serverless (Vercel) & Traditional environments
+app.use(async (req, res, next) => {
+  try {
+    if (process.env.MONGO_URI) {
+      await connectDB();
+    }
+    next();
+  } catch (err) {
+    console.error("Database connection error in request:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Database connection failed. Please check server configuration.",
+    });
+  }
+});
 
 
 /*
